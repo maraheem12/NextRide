@@ -27,7 +27,7 @@ The request body must be a JSON object containing the following fields:
     "lastname": "Doe"
   },
   "email": "john.doe@example.com",
-  "password": "password123"
+    "password": "password123"
 }
 ```
 
@@ -90,4 +90,111 @@ The request body must be a JSON object containing the following fields:
 ## Notes
 
 - Ensure that the `Content-Type` header is set to `application/json` when making requests to this endpoint.
+- The JWT token returned should be used for authenticating subsequent requests to protected endpoints.
+
+# User Login Endpoint Documentation
+
+## Endpoint
+
+`POST /users/login`
+
+## Description
+
+This endpoint allows an existing user to log in by providing their email and password. Upon successful login, a JSON Web Token (JWT) is returned for authentication purposes.
+
+## Request Body
+
+The request body must be a JSON object containing the following fields:
+
+- `email` (string, required): The user's email address. Must be a valid email format.
+- `password` (string, required): The user's password. Must be at least 6 characters long.
+
+### Example
+
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+## Responses
+
+### Success
+
+- **Status Code**: `200 OK`
+- **Response Body**:
+  ```json
+  {
+    "user": {
+      "_id": "user_id",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com"
+    },
+    "token": "jwt_token"
+  }
+  ```
+
+### Error: Validation Error
+
+- **Status Code**: `400 Bad Request`
+- **Response Body**:
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Invalid email",
+        "param": "email",
+        "location": "body"
+      },
+      {
+        "msg": "Password must be at least 6 characters long",
+        "param": "password",
+        "location": "body"
+      }
+    ]
+  }
+  ```
+
+### Error: Invalid Credentials
+
+- **Status Code**: `401 Unauthorized`
+- **Response Body**:
+  ```json
+  {
+    "message": "Invalid email or password"
+  }
+  ```
+
+## Notes
+
+- Ensure that the `Content-Type` header is set to `application/json` when making requests to this endpoint.
+### User Logout
+
+**Endpoint:** `GET /user/logout`
+
+**Description:** Logs out the authenticated user by clearing the authentication token and blacklisting it to prevent further use.
+
+**Middleware:**
+- `authMiddleware.authUser`: Ensures the user is authenticated by verifying the JWT token and checking if it is not blacklisted.
+
+**Controller Function:** `userController.logoutUser`
+
+**Response:**
+- `200 OK`: Successfully logged out the user and blacklisted the token.
+  - Example: `{ message: 'Logged out successfully' }`
+- `401 Unauthorized`: If the token is invalid or blacklisted.
+  - Example: `{ message: 'Access denied. No token provided' }`
+  - Example: `{ message: 'Access denied. Token blacklisted' }`
+- `404 Not Found`: If the user associated with the token is not found.
+  - Example: `{ message: 'User not found' }`
+
+**Usage:**
+- The JWT token returned during login should be used for authenticating this request.
+- The token can be provided in the `Authorization` header as a Bearer token or in cookies.
+
+**Example Request:**
 - The JWT token returned should be used for authenticating subsequent requests to protected endpoints.
