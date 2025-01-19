@@ -16,8 +16,7 @@ module.exports.registerUser = async (req, res, next) => {
         }
     const userss = new userModel();
     const hashPassword = await userss.hashPassword(password);
-    // const hashPassword = await userModel.hashPassword(password);
-
+    
     const user = await userService.createUser({
         firstname: fullname.firstname,
         lastname: fullname.lastname,
@@ -54,6 +53,7 @@ module.exports.getUserProfile = async (req, res, next) => {
     res.status(200).json(req.user);
 }   
 
+//This code is from user.controller.js
 module.exports.logoutUser = async (req, res, next) => {
     res.clearCookie('token');
     const token = await req.cokkies.token|| req.headers.authorization.split(' ')[1];
