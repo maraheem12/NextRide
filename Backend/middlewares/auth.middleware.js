@@ -1,12 +1,11 @@
 
-const express = require('express'); //importing express
-const {body} = require("express-validator"); //importing express-validator
-const router = express.Router(); //creating router
 const userController = require('../controllers/user.controller'); //importing user controller
 const userModel = require('../models/user.model'); //importing user model
 const bcrypt = require('bcrypt'); //importing bcrypt
 const jwt = require('jsonwebtoken'); //importing jsonwebtoken
-//register routemodule.exports.authUser = async (req, res, next) => {
+const blackListTokenModel= require('../models/blackListTokenModel'); //importing blackListTokenModel
+const captainModel = require('../models/captain.model'); //importing captain model
+module.exports.authUser = async (req, res, next) => {
     try {
         // Retrieve token from cookies or authorization header
         const token = req.cookies?.token || req.headers?.authorization?.split(' ')[1];
@@ -36,5 +35,33 @@ const jwt = require('jsonwebtoken'); //importing jsonwebtoken
     } catch (error) {
         // Handle JWT errors and others
         return res.status(401).json({ message: error.message || 'Invalid token' });
+    }
+};
+
+
+module.exports.authCaptain = async (req, res, next) => {
+    const token = req.cookies.token || req.headers.authorization?.split(' ')[ 1 ];
+
+
+    if (!token) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    const isBlacklisted = await blackListTokenModel.findOne({ token: token });
+
+
+
+    if (isBlacklisted) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const captain = await captainModel.findById(decoded._id)
+        req.captain = captain;
+
+        return next()
+    } catch (err) {
+        res.status(401).json({ message: 'Unauthorized' });
     }
 };
