@@ -23,6 +23,8 @@ userController.loginUser)
 
 //user profile route
 router.get('/profile', authMiddleware.authUser, userController.getUserProfile);
+
+//user logout route
 router.get('/logout', authMiddleware.authUser, userController.logoutUser);
 
 

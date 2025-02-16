@@ -26,15 +26,19 @@ const CaptainLogin = () => {
           <input
             className="bg-[#eeeeee] justify-center lex flex-col items-center mb-4 font-bold px-10 py-2  border-y-indigo-400"
             type="email"
+            value={email}
             placeholder="example@gmail.com"
             required
+            onChange={(e) => setEmail(e.target.value)}
           />
           <h2 className="pb-2 font-bold text-xl">Enter password</h2>
           <input
             className="bg-[#eeeeee] justify-center flex flex-col mb-4 font-bold px-10 py-2 border-y-indigo-400"
             type="password"
+            value={password}
             placeholder="Password"
             required
+            onChange={(e) => setPassword(e.target.value)}
           />{" "}
           <br />
           <button

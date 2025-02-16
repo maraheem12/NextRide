@@ -41,14 +41,16 @@ const CaptainSignup = () => {
               type="text"
               placeholder="Firstname"
               required
+              value={firstName}
               onChange={(e) => {
-                (e) => setFirstName(e.target.value);
+                 setFirstName(e.target.value);
               }}
             />
             <input
               className="bg-[#eeeeee] placeholder:text-sm justify-center items-center mb-4 font-bold px-5 py-2 w-1/2  border-y-indigo-400"
               type="text"
               placeholder="Lastname"
+              value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
           </div>
@@ -58,6 +60,7 @@ const CaptainSignup = () => {
             type="email"
             placeholder="example@gmail.com"
             required
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <h2 className="pb-2 font-bold text-xl">Enter password</h2>
@@ -66,6 +69,7 @@ const CaptainSignup = () => {
             type="password"
             placeholder="Password"
             required
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />{" "}
           <br />

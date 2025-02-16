@@ -27,6 +27,8 @@ const UserLogin = () => {
             type="email"
             placeholder="example@gmail.com"
             required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <h2 className="pb-2 font-bold text-xl">Enter password</h2>
           <input
@@ -34,6 +36,8 @@ const UserLogin = () => {
             type="password"
             placeholder="Password"
             required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />{" "}
           <br />
           <button
