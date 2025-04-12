@@ -1,18 +1,11 @@
+
 const http = require('http');
 const app = require('./app');
-//const port = process.env.PORT;
-const port = process.env.PORT;
-const userRoutes = require('./routes/user.routes');
-const server = http.createServer(app);  
-const express = require('express');             
-const cors = require('cors');
+const port = process.env.PORT || 3000;
 
 
-// Middleware for parsing JSON
-app.use(express.json());
-app.use(cors());
-app.use("/api/user", require("./routes/user.routes")); 
+const server = http.createServer(app);
 
-server.listen(port, () => {  
-    console.log(`Server file ${port}`);
+server.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });

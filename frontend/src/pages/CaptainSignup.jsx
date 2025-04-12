@@ -30,6 +30,11 @@ const CaptainSignup = () => {
   
     }
   return (
+    
+
+
+  <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="w-[375px] h-[667px] flex flex-col justify-between border border-slate-950 bg-center bg-cover bg-bottom shadow-lg rounded-lg overflow-hidden">
     <div className="justify-between flex flex-col h-screen">
       <div className="p-4 m-2 mr-6">
         <img src={logo} alt="NextRide Logo" className="w-40 pb-9" />
@@ -91,6 +96,8 @@ const CaptainSignup = () => {
       </div>
       <Footer />
     </div>
+    </div>
+  </div>
   );
 };
 

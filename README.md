@@ -367,3 +367,5 @@ This endpoint allows an authenticated captain to log out by clearing the authent
 
 **Example Request:**
 - The JWT token returned should be used for authenticating subsequent requests to protected endpoints.
+
+

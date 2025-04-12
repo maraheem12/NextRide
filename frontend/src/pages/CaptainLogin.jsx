@@ -4,7 +4,7 @@ import logo from '../assets/logo.svg'
 import { useState } from 'react'
 
 const CaptainLogin = () => {
-     const [email, setEmail] = useState("");
+      const [email, setEmail] = useState("");
       const [password, setPassword] = useState("");
       const [captainData, setcaptainData] = useState({});
     
@@ -18,6 +18,9 @@ const CaptainLogin = () => {
         setPassword('');
       }
   return (
+    
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="w-[375px] h-[667px] flex flex-col justify-between border border-slate-950 bg-center bg-cover bg-bottom shadow-lg rounded-lg overflow-hidden">
     <div className="justify-between flex flex-col h-screen">
       <div className="p-9">
         <img src={logo} alt="NextRide Logo" className="w-60 pb-9" />
@@ -65,7 +68,13 @@ const CaptainLogin = () => {
         </Link>
       </div>
     </div>
+    </div>
+</div>
   );
 }
 
 export default CaptainLogin
+
+
+
+
