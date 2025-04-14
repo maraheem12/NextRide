@@ -10,8 +10,10 @@ const UserSignup = () => {
   const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
+
+
   const navigate = useNavigate();
-  const { setUser } = useContext(UserDataContext);
+  const { user ,setUser } = React.useContext(UserDataContext);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -22,24 +24,16 @@ const UserSignup = () => {
         firstname: firstname,
         lastname: lastname,
       },
-    };
-
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/user/register`,
-        newUser
-      );
-      console.log(response.data);
-      if (response.status === 201) {
-        setUser(response.data.user);
-        navigate("/home");
-      } else {
-        alert("Failed to register. Please try again.");
-      }
-    } catch (error) {
-      alert("Failed to register. Please try again.");
-      console.error("Error during registration:", error);
     }
+
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser, )
+    if(response.status === 201) {
+      setUser(response.data.user)
+      localStorage.setItem("token", response.data.token); // Save token
+      navigate("/home")
+
+    }
+    
 
     // Reset input fields after successful submission
     setEmail("");
